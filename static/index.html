@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ToDo SPA</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 8px 12px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .calendar-button {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #e0f0ff;
+      border: 1px solid #007bff;
+      color: #007bff;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .calendar-button:hover {
+      background: #d0e8ff;
+    }
+    .task-item {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background: #fefefe;
+    }
+    input[type="range"] {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ToDoリスト</h1>
+    <div class="input-group">
+      <input id="taskInput" type="text" placeholder="タスクを入力">
+      <button id="calendarButton" type="button" class="calendar-button">
+        <img src="https://img.icons8.com/ios-filled/20/007bff/calendar.png" alt="calendar">
+        <span>期限を選択</span>
+      </button>
+      <input id="deadlineInput" type="text" placeholder="期限を選択" style="display:none;">
+      <button onclick="addTask()">追加</button>
+    </div>
+    <h2>📝 未完了タスク</h2>
+    <ul id="taskList"></ul>
+    <h2>✅ 完了したタスク</h2>
+    <ul id="completedList"></ul>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    let calendarInstance = null;
+    document.getElementById("calendarButton").addEventListener("click", function() {
+      const input = document.getElementById("deadlineInput");
+      input.style.display = "inline-block";
+      if (!calendarInstance) {
+        calendarInstance = flatpickr(input, {
+          enableTime: true,
+          dateFormat: "Y-m-d H:i",
+          time_24hr: true,
+          defaultDate: new Date()
+        });
+      }
+      input.focus();
+      calendarInstance.open();
+    });
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>
