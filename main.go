@@ -1,4 +1,3 @@
-
 package main
 
 import (
@@ -116,5 +115,10 @@ func main() {
 	fs := http.FileServer(http.Dir("./static"))
 	r.PathPrefix("/").Handler(fs)
 
-	http.ListenAndServe(":8080", r)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // ローカル開発用のデフォルト
+	}
+	http.ListenAndServe(":"+port, r)
+
 }
